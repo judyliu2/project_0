@@ -1,0 +1,6 @@
+int main(){
+  struct song_node *table[26];
+  insert_order();
+  printf("Testing print_library");
+  return 0;
+}

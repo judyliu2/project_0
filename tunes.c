@@ -1,20 +1,37 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "headers.h"
+
 #include <time.h>
 
 
-typedef struct song_node{ 
+struct song_node{ 
   char *name;
   char *artist;
   struct song_node *next;
-} song_node;
+};
 
 struct song_node *table[26];
+void print_list(struct song_node* node);
+
+struct song_node * insert_front(struct song_node *front_song, char *new_name, char *new_artist);
+
+struct song_node * insert_order(struct song_node *front_song, char *new_name, char *new_artist);
+
+struct song_node * find_sname(struct song_node *front_song, char *new_name);
+
+struct song_node * find_aname(struct song_node *front_song, char *new_name);
+
+struct song_node * random_song(struct song_node *front_song);
+
+struct song_node * remove_node(struct song_node *front_song, char *s_name, char *s_artist);
+
+struct song_node * freelist(struct song_node *front_song);
+
+
 
 void print_list(struct song_node* node){
   while(node){
-    printf("Song: %s \n Artist: %s\n", node->name, node-> artist);
+    printf(" %s \t:  %s\t | \t", node->artist, node-> name);
     node = node->next;
   }
 }
@@ -128,4 +145,27 @@ struct song_node * freelist(struct song_node *front_song){
   }
   free(old_head);
   return front_song;
+}
+
+
+int main(){
+  struct song_node *table[26];
+  printf("Testing print_library:\n");
+  printf("=================================\n");
+
+  printf("Testing print_letter:\n");
+  printf("=================================\n");
+
+  printf("Testing find:\n");
+  
+  printf("Testing find artist:\n");
+
+  printf("Testing find:\n");
+
+  printf("Testing remove_song:\n");
+
+  printf("Testing clear_library:\n");
+
+  printf("Library after clear:\n");
+  return 0;
 }
