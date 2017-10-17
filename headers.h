@@ -6,15 +6,17 @@ typedef struct song_node{
 
 void print_list(struct song_node*);
 
-struct song_node * insert_front(struct song_node *, char *);
+struct song_node * insert_front(struct song_node *, char *, char*);
 
-struct song_node * insert_order(struct song_node *, char *);
+struct song_node * insert_order(struct song_node *, char *, char*);
 
-struct song_node * find_sname(char *);
+struct song_node * find_sname(struct song_node *, char *);
 
-struct song_node * find_aname(char *);
+struct song_node * find_aname(struct song_node *, char *);
 
-struct song_node * remove_node(struct song_node *);
+struct song_node * random_song(struct song_node *);
+
+struct song_node * remove_node(struct song_node *, char *, char *);
 
 struct song_node * freelist(struct song_node *);
 
