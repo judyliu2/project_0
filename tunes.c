@@ -28,6 +28,15 @@ void remove_node(struct song_node *front_song, char *s_name, char *s_artist);
 struct song_node * freelist(struct song_node *front_song);
 
 
+struct song_node * find_song(struct song_node* table[26],char * s_name, char * s_artist);
+struct song_node * find_artist(struct song_node* table[26],char* artist); 
+void print_songs( struct song_node* list);
+void print_artist(struct song_node* table[26]);
+void print_lib(struct song_node* table[26]);
+void shuffle(struct song_node* table[26]);
+void delete_song(struct song_node* table[26], char* s_name, char* s_artist);
+void delete_all(struct song_node* table[26]);
+
 
 void print_list(struct song_node* node){
   while(node){
@@ -145,6 +154,58 @@ struct song_node * freelist(struct song_node *front_song){
   
  
 }
+struct song_node * find_song(struct song_node* table[26], char * s_name, char * s_artist){
+  int i ;
+  for (i = 0; i< 26; i ++){
+    struct node* temp = table[i];
+    while (temp){
+      if(temp->name == s_name && temp->artist == s_artist){
+	return temp;
+      }
+      temp= temp->next;
+    }
+  }
+  return NULL;
+}
+struct song_node * find_artist(struct song_node* table[26],char* artist){
+  int i ;
+  for (i = 0; i< 26; i ++){
+    struct node* temp = table[i];
+    while (temp){
+      find_aname( temp, artist);
+      }
+      
+    }
+  }
+}
+void print_songs( struct song_node* list);
+
+void print_artist(struct song_node* table[26]);
+
+void print_lib(struct song_node* table[26]){
+  int i ;
+  for (i = 0; i< 26; i ++){
+    struct node* temp = table[i];
+    while (temp){
+      print_list(temp);
+      }
+      
+    }
+  }
+}
+void shuffle(struct song_node* table[26]);
+
+void delete_song(struct song_node* table[26], char*s_name, char* s_artist){
+   int i ;
+  for (i = 0; i< 26; i ++){
+    struct node* temp = table[i];
+    while (temp){
+      remove_node(temp, s_name, s_artist);
+      }
+    }
+  }
+}
+void delete_all(struct song_node* table[26]);
 
 
 int main(){
