@@ -23,7 +23,7 @@ struct song_node * find_aname(struct song_node *front_song, char *new_name);
 
 struct song_node * random_song(struct song_node *front_song);
 
-struct song_node * remove_node(struct song_node *front_song, char *s_name, char *s_artist);
+void remove_node(struct song_node *front_song, char *s_name, char *s_artist);
 
 struct song_node * freelist(struct song_node *front_song);
 
@@ -31,7 +31,7 @@ struct song_node * freelist(struct song_node *front_song);
 
 void print_list(struct song_node* node){
   while(node){
-    printf(" %s \t:  %s\t | \t", node->artist, node-> name);
+    printf(" %s: %s |", node->artist, node-> name);
     node = node->next;
   }
 }
@@ -45,21 +45,27 @@ struct song_node * insert_front(struct song_node *front_song, char *new_name, ch
 }
 
 struct song_node * insert_order(struct song_node *front_song, char *new_name, char *new_artist){
-  struct song_node *new_song;
-  struct song_node *old_head = front_song;
-  new_song ->name = new_name;
-  new_song ->artist = new_artist;
-  while(old_head->next != NULL){
-    struct song_node *temp = old_head ->next;
-    
-    if (((new_song->name) > (old_head->name)) && ((new_song->name) < (temp-> name))){
-     
-      old_head-> next = new_song;
-      new_song-> next = temp;
-      
-    }
-    front_song= front_song->next;
+
+  struct song_node *new_song = (struct song_node*) malloc(sizeof(struct song_node));
+  new_song->name = new_name;
+  new_song->artist = new_artist;
+
+  if (new_name < front_song-> name){
+    new_song->next = front_song;
+    return new_song;
   }
+  
+  struct song_node *temp = NULL;
+  temp = front_song;
+  while (temp->next != NULL && new_name > temp->name){
+    temp = temp-> next;
+  }
+  
+  new_song->next = temp->next;
+  temp->next = new_song;
+
+
+  
   return front_song;
 }
 
@@ -96,60 +102,102 @@ struct song_node * random_song(struct song_node *front_song){
   srand(time(NULL));
   int random =  rand() % (counter + 1 - 0) + 0;
   temp = front_song;
-  while (random > 0){
+  while (random > -1){
     temp = temp->next;
     random =- 1;
   }
-  return front_song;
+  return temp;
 }
 
-struct song_node * remove_node(struct song_node *front_song, char *s_name, char *s_artist){
-  struct song_node * old_head;
-  while (old_head){                                       //1 song in list
-    if (old_head->next == NULL){
-      if ((old_head->name == s_name) && (old_head->artist == s_artist)){
-	free(old_head);
-      }
-      
-    }
-    
-    else{
-      struct song_node *temp = old_head->next;
-      if (temp->next != NULL){                             // at least 3 songs
-	struct song_node *temp2 = temp->next;
-	if ((temp->name == s_name) && (temp->artist == s_artist)){
-	  old_head->next = temp2;
-	  free(temp);
-	}
-      }
-      else{
-	if ((temp->name == s_name) && (temp->artist == s_artist)){ //freed song is at the end
-	  free(temp);
-	  old_head->next = NULL;
-	}
-      }
-
-    }
-    old_head = old_head->next;
+void remove_node(struct song_node *front_song, char *s_name, char *s_artist){
+  if (front_song == NULL){
+    return;
   }
-  
-  return front_song;
+  struct song_node *temp = front_song;
+  struct song_node *holder= front_song;
+  if (temp->name == s_name && temp->artist == s_artist){
+    front_song = temp->next;
+    free(temp);
+    return;
+  }
+  while (temp->next != NULL && temp-> next-> name != s_name && temp-> next-> artist != s_artist){
+    temp = temp-> next;
+  }
+  if (temp->next == NULL){
+    printf("given song has not been found\n");
+    return;
+  }
+ 
+  holder = temp->next->next;
+  free(temp->next);
+  temp->next = holder;
+
 }
 
 struct song_node * freelist(struct song_node *front_song){
-  struct song_node *old_head = front_song;
-  while(old_head->next != NULL){
-    struct song_node *temp = old_head->next;
-    free(old_head);
-    old_head = temp;
+
+  if (!front_song){
+    return 0;
   }
-  free(old_head);
-  return front_song;
+  freelist(front_song->next);
+  free(front_song);
+  return 0;
+  
+ 
 }
 
 
 int main(){
   struct song_node *table[26];
+  struct song_node *test = (struct song_node*) malloc (sizeof (struct song_node));
+
+  printf("Testing Linked List Functions:\n");
+
+  test-> name = "not today";
+  test-> artist = "imagine dragons";
+  printf("Testing print_list:\n");
+  print_list(test);
+  printf("\n");
+  
+  
+  printf("Testing insert_front:\n");
+  struct song_node *p = insert_front(test, "xo", "eden");
+  print_list(p);
+  printf("\n");
+  //freelist(test);
+  //freelist(p);
+  
+  printf("Testing insert_order:\n");
+  struct song_node *o = insert_order(test, "xo", "eden");
+  print_list(o);
+  printf("\n");
+  struct song_node *q = insert_order(o, "zzz", "somebody");
+  print_list(q);
+  printf("\n");
+
+  printf("Testing:find_sname\n");
+  printf("Location of \"not today \": %p \n", find_sname(q,"not today"));
+
+  printf("Testing:find_aname\n");
+  printf("Location of \"imagine dragons \": %p \n", find_aname(q,"imagine dragons"));
+  
+  printf("Testing: random_song(): \n");
+  print_list(random_song(o));
+  printf("\n");
+  
+  printf("Testing:remove_node\n");
+  remove_node(o, "xo" , "eden");
+  print_list(o);
+  printf("\n");
+
+  printf("Testing:remove_node\n");
+  remove_node(o, "not today" , "imagine dragons");
+  print_list(o);
+  printf("\n");
+  printf("=================================\n");
+
+
+  
   printf("Testing print_library:\n");
   printf("=================================\n");
 
