@@ -30,7 +30,7 @@ struct song_node * freelist(struct song_node *front_song);
 
 struct song_node * find_song(struct song_node* table[26],char * s_name, char * s_artist);
 struct song_node * find_artist(struct song_node* table[26],char* artist); 
-void print_songs( struct song_node* list);
+void print_songs( struct song_node* table[26], int letter);
 void print_artist(struct song_node* table[26]);
 void print_lib(struct song_node* table[26]);
 void shuffle(struct song_node* table[26]);
@@ -154,10 +154,11 @@ struct song_node * freelist(struct song_node *front_song){
   
  
 }
+/*
 struct song_node * find_song(struct song_node* table[26], char * s_name, char * s_artist){
   int i ;
   for (i = 0; i< 26; i ++){
-    struct node* temp = table[i];
+    struct node* temp = (struct song_node* )table[i];
     while (temp){
       if(temp->name == s_name && temp->artist == s_artist){
 	return temp;
@@ -167,21 +168,27 @@ struct song_node * find_song(struct song_node* table[26], char * s_name, char * 
   }
   return NULL;
 }
+*/
+/*
 struct song_node * find_artist(struct song_node* table[26],char* artist){
   int i ;
   for (i = 0; i< 26; i ++){
     struct node* temp = table[i];
     while (temp){
-      find_aname( temp, artist);
+      return find_aname( temp, artist);
       }
       
     }
   }
 }
-void print_songs( struct song_node* list);
+*/
+void print_songs( struct song_node* table[26], int letter){
+  print_list(table[letter]);
+}
 
-void print_artist(struct song_node* table[26]);
-
+void print_artist(struct song_node* table[26]){
+}
+/*
 void print_lib(struct song_node* table[26]){
   int i ;
   for (i = 0; i< 26; i ++){
@@ -193,7 +200,23 @@ void print_lib(struct song_node* table[26]){
     }
   }
 }
-void shuffle(struct song_node* table[26]);
+*/
+/*
+void shuffle(struct song_node* table[26]){
+  //while randomly chooses a random numbr of songs
+  int random_len = 5;
+  while(random_len){
+    srand(time(NULL));
+    int random_letter = rand % (25 + 1 - 0) + 0;
+    if (table[random_letter]){
+      struct song_node *r_song = random_song(table[random_letter]);
+      printf("%s : %s", r_song->name, r_artist->artist);
+    }
+    random_len = random_len -1;
+  }
+  return;
+}
+*/
 
 void delete_song(struct song_node* table[26], char*s_name, char* s_artist){
    int i ;
