@@ -11,7 +11,7 @@ struct song_node * insert_front(struct song_node *, char *, char *);
 
 struct song_node * insert_order(struct song_node *, char *, char *);
 
-struct song_node * find_sname(struct song_node *, char );
+struct song_node * find_sname(struct song_node *, char *);
 
 struct song_node * find_aname(struct song_node *, char *);
 

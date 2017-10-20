@@ -12,7 +12,7 @@ int main(){
 
     struct song_node *table[26] =
       {test2,test1,test,test,test,test,test,test,test,test,test,test,test,test,test,test,test,test,test,test,test,test,test,test,test,test};
-    /*
+    
   printf("Testing Linked List Functions:\n");
 
   test-> artist = "imagine dragons";
@@ -68,7 +68,7 @@ int main(){
   printf("\n");
   printf("\n");
   printf("=================================\n");
-    */
+    
   printf("Testing Music Library functions:\n");
 
   printf("=================================\n");
@@ -111,8 +111,11 @@ int main(){
   printf("Testing delete_song:\n");
   delete_song(table,"atlantis", "seafret");
   print_lib(table);
+  printf("\n");
   printf("=================================\n");
-  //shuffle(table);
+  printf("Testing shuffle\n");
+  shuffle(table);
+  printf("\n");
 
   printf("Testing clear_library:\n");
   //delete_all(table);

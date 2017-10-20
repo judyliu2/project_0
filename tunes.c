@@ -200,30 +200,17 @@ void print_lib(struct song_node* table[26]){
 
 
 void shuffle(struct song_node* table[26]){
-  int len = 3;
+  int len = 5;
   while (len>0){
     int random_letter = rand() %26;
     if (table[random_letter]){
       print_node(random_song(table[random_letter]));
-      len -= 3;
+      len -= 1;
     }
-  }
-}
-  
-  /*
-  //while randomly chooses a random numbr of songs
-  int random_len = 5;
-  while(random_len){
-    srand(time(NULL));
-    int random_letter = rand() % (25 + 1 - 0) + 0;
-    if (table[random_letter]){
-      struct song_node *r_song = random_song(table[random_letter]);
-      print_node(r_song);
-    }
-    random_len = random_len -1;
   }
   return;
-  */
+}
+  
 
 
 
