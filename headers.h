@@ -1,22 +1,41 @@
-typedef struct song_node{ 
-  char name[256];
-  char artist[256];
+
+struct song_node{ 
+  char *name;
+  char *artist;
   struct song_node *next;
-} song_node;
+};
+void print_node(struct song_node* );
+void print_list(struct song_node* );
 
-void print_list(struct song_node* node);
+struct song_node * insert_front(struct song_node *, char *, char *);
 
-struct song_node * insert_front(struct song_node *front_song, char *new_name, char new_artist*);
+struct song_node * insert_order(struct song_node *, char *, char *);
 
-struct song_node * insert_order(struct song_node *front_song, char *new_name, char new_artist*);
+struct song_node * find_sname(struct song_node *, char );
 
-struct song_node * find_sname(struct song_node *front_song, char *new_name);
+struct song_node * find_aname(struct song_node *, char *);
 
-struct song_node * find_aname(struct song_node *front_song, char *new_name);
+struct song_node * random_song(struct song_node *);
 
-struct song_node * random_song(struct song_node *front_song);
+void remove_node(struct song_node *, char *, char *);
 
-struct song_node * remove_node(struct song_node *front_song, char *s_name, char *s_artist);
+struct song_node * freelist(struct song_node *);
 
-struct song_node * freelist(struct song_node *front_song);
+struct song_node * find_song(struct song_node* [26],char * , char * );
 
+struct song_node * find_artist(struct song_node* [26],char* );
+
+
+struct song_node * add_lib(struct song_node* [26], char*, char* );
+
+void print_songs( struct song_node* [26], char );
+
+void print_artist(struct song_node* [26], char * );
+
+void print_lib(struct song_node* [26]);
+
+void shuffle(struct song_node* [26]);
+
+void delete_song(struct song_node* [26], char* , char* );
+
+void delete_all(struct song_node* [26]);
