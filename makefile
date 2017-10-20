@@ -1,4 +1,4 @@
-all: tunes.c main.o
+all: tunes.o main.o
 	gcc -o tester tunes.o main.o
 
 tunes.o: tunes.c headers.h
