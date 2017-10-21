@@ -14,8 +14,8 @@ void print_node(struct song_node* node){
 
 void print_list(struct song_node* node){
   
-  while(node){
-    print_node(node);
+  while(node->next){
+    print_node(node->next);
     node = node->next;
   }
 
@@ -120,7 +120,7 @@ void remove_node(struct song_node *front_song, char *s_name, char *s_artist){
 }
 
 struct song_node * freelist(struct song_node *front_song){
-
+ 
   if (!front_song){
     return 0;
   }
@@ -131,7 +131,7 @@ struct song_node * freelist(struct song_node *front_song){
  
 }
 struct song_node * add_lib(struct song_node* table[26], char*s_name, char* s_artist){
-  int i = (int) (s_name[0]-97);
+  int i = (int) (s_name[0]) - 97;
   return insert_order(table[i], s_name, s_artist);
 
 }
@@ -200,13 +200,18 @@ void print_lib(struct song_node* table[26]){
 
 
 void shuffle(struct song_node* table[26]){
-  int len = 5;
+  int len = 2;
+  int random_letter = rand() %26;
+
   while (len>0){
-    int random_letter = rand() %26;
-    if (table[random_letter]){
+    if (table[random_letter] ){
       print_node(random_song(table[random_letter]));
       len -= 1;
+      random_letter = rand() %26;
     }
+    
+    random_letter = rand() %26;
+    
   }
   return;
 }
@@ -229,7 +234,7 @@ void delete_song(struct song_node* table[26], char*s_name, char* s_artist){
 void delete_all(struct song_node* table[26]){
   int i;
   for (i = 0; i<26; i++){
-    free(table[i]);
+    freelist(table[i]);
   }
 }
 
